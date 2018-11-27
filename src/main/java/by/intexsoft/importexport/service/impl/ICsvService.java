@@ -17,8 +17,8 @@ import java.util.List;
 public class ICsvService implements CsvService {
     private final String[] header = {"uuid", "date"};
 
-    public List<CSVRecord> readCsvAndConvertToList(Reader csvFile, TypeEvent type) throws IOException {
-        CSVFormat format = CSVFormat.DEFAULT.withHeader(header);
+    public List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile, TypeEvent type) throws IOException {
+        CSVFormat format = CSVFormat.DEFAULT.withHeader(header).withSkipHeaderRecord(true);
         CSVParser parser = new CSVParser(csvFile, format);
         return parser.getRecords();
     }

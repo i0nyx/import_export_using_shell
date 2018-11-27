@@ -3,6 +3,7 @@ package by.intexsoft.importexport.service.impl;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.service.ConvertService;
 import by.intexsoft.importexport.service.EventService;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class IConvertService implements ConvertService {
     }
 
     @Override
-    public void convertToList(List lists, TypeEvent event) {
-        map.get(event).save(lists);
+    public void chooseEventService(List<CSVRecord> csvRecords, TypeEvent event) {
+        map.get(event).convertOfCsvRecordToEventAndSave(csvRecords);
     }
 }

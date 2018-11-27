@@ -8,6 +8,6 @@ import java.io.Reader;
 import java.util.List;
 
 public interface CsvService {
-    List<CSVRecord> readCsvAndConvertToList(Reader csvFile, TypeEvent type) throws IOException;
+    List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile, TypeEvent type) throws IOException;
     void writeCsv(List<String> str);
 }

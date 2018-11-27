@@ -1,6 +1,5 @@
 package by.intexsoft.importexport.pojo;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Call extends Event {
+public class Call {
     @PrimaryKey
     private UUID uuid;
     private Date date;

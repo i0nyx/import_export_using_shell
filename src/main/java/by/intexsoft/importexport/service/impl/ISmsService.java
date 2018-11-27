@@ -5,6 +5,7 @@ import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.repositories.SmsRepository;
 import by.intexsoft.importexport.service.EventService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +28,15 @@ public class ISmsService implements EventService<Sms> {
     @Override
     public TypeEvent getType() {
         return TypeEvent.Sms;
+    }
+
+    @Override
+    public void convertOfCsvRecordToEventAndSave(List<CSVRecord> list) {
+
+    }
+
+    @Override
+    public Sms buildEventByType(CSVRecord record) {
+        return null;
     }
 }

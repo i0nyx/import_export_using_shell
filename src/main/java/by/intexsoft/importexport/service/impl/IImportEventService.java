@@ -22,7 +22,7 @@ public class IImportEventService implements ImportEventService {
     @Override
     public void checkAndImport(String path) throws IOException {
         TypeEvent type = TypeEvent.valueOf(StringUtil.getStringType(path));
-        List<CSVRecord> lists = csvService.readCsvAndConvertToList(new FileReader(path), type);
-        convertService.convertToList(lists, type);
+        List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path), type);
+        convertService.chooseEventService(csvRecords, type);
     }
 }
