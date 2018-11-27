@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ICallService implements EventService {
+public class ICallService implements EventService<Call> {
     private final CallRepository callRepository;
 
     @Override
@@ -20,7 +20,13 @@ public class ICallService implements EventService {
     }
 
     @Override
-    public void save(Object object, TypeEvent typeEvent) {
+    public void save(List list) {
+        System.out.println("call " + list);
+//        callRepository.saveAll(list);
+    }
 
+    @Override
+    public TypeEvent getType() {
+        return TypeEvent.Call;
     }
 }

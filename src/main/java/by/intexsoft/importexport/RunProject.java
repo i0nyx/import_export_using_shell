@@ -1,15 +1,17 @@
 package by.intexsoft.importexport;
 
-import by.intexsoft.importexport.Util.StringUtil;
-import by.intexsoft.importexport.pojo.TypeEvent;
+import by.intexsoft.importexport.config.ProjectConfig;
+import by.intexsoft.importexport.service.ImportEventService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 
 public class RunProject {
 
     public static void main(String[] args) throws IOException {
-        String eventTypeStr = StringUtil.getStringType("d:/CALL_file.csv");
-        Object obj = TypeEvent.getEvent(TypeEvent.valueOf(eventTypeStr));
-        System.out.println(obj.getClass());
+        ApplicationContext context = new AnnotationConfigApplicationContext(ProjectConfig.class);
+        ImportEventService importService = context.getBean(ImportEventService.class);
+        importService.checkAndImport("d:/CALL_file.csv");
     }
 }

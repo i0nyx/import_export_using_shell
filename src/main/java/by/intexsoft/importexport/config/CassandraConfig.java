@@ -1,6 +1,5 @@
 package by.intexsoft.importexport.config;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,14 +19,13 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 @PropertySource("classpath:cassandra.properties")
 @ComponentScan("by.intexsoft.importexport")
 @EnableCassandraRepositories(basePackages = {"by.intexsoft.importexport.repositories"})
-@AllArgsConstructor
 public class CassandraConfig extends AbstractCassandraConfiguration {
     @Value("${cassandra.host}")
-    private final String cassandraHost;
+    private String cassandraHost;
     @Value("${cassandra.port}")
-    private final int cassandraPort;
+    private int cassandraPort;
     @Value("${cassandra.keyspace}")
-    private final String cassandraSchema;
+    private String cassandraSchema;
 
     /**
      * {@inheritDoc}

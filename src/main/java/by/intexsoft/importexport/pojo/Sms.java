@@ -11,8 +11,8 @@ import java.util.UUID;
 @Table
 @Data
 @NoArgsConstructor
-public class Sms {
+public class Sms extends Event {
     @PrimaryKey
     private UUID uuid;
-    private Date data;
+    private Date date;
 }

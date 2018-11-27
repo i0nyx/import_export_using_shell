@@ -1,34 +1,29 @@
 package by.intexsoft.importexport.service.impl;
 
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.service.CsvService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 public class ICsvService implements CsvService {
-    public List readCsvAndConvertToBean(Reader csvFile, TypeEvent type) {
-        CsvToBean csvToBean = new CsvToBean();
-        CSVReader reader = new CSVReader(csvFile);
-        return csvToBean.parse(setColumnMapping(TypeEvent.getEvent(type)), reader);
+    private final String[] header = {"uuid", "date"};
+
+    public List<CSVRecord> readCsvAndConvertToList(Reader csvFile, TypeEvent type) throws IOException {
+        CSVFormat format = CSVFormat.DEFAULT.withHeader(header);
+        CSVParser parser = new CSVParser(csvFile, format);
+        return parser.getRecords();
     }
 
     public void writeCsv(List<String> str) {
 
-    }
-
-    private ColumnPositionMappingStrategy setColumnMapping(Object obj) {
-        ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
-        strategy.setType(obj.getClass());
-        String[] columns = new String[] {"uuid", "date"};
-        strategy.setColumnMapping(columns);
-        return strategy;
     }
 }

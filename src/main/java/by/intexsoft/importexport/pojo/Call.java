@@ -1,6 +1,8 @@
 package by.intexsoft.importexport.pojo;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -11,10 +13,12 @@ import java.util.UUID;
 
 @Table
 @Data
+@Builder
 @NoArgsConstructor
-public class Call {
+@AllArgsConstructor
+public class Call extends Event {
     @PrimaryKey
     private UUID uuid;
-    private Date dataStart;
+    private Date date;
 
 }
