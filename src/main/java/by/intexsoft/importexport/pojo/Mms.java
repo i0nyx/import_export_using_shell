@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Table
@@ -18,5 +18,5 @@ import java.util.UUID;
 public class Mms {
     @PrimaryKey
     private UUID uuid;
-    private Date date;
+    private LocalDate date;
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,14 +47,8 @@ public class ICallService implements EventService<Call> {
     @Override
     public Call buildEventByType(CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null!"));
-        Call result = null;
-        try {
-            result = Call.builder().uuid(UUID.fromString(record.get("uuid")))
-                    .date(new SimpleDateFormat("yyyy.MM.dd").parse(record.get("date")))
+        return Call.builder().uuid(UUID.fromString(record.get("uuid")))
+                    .date(LocalDate.parse(record.get("date")))
                     .build();
-        } catch (ParseException e) {
-            log.error("can not parse string to date: {} " + e);
-        }
-        return result;
     }
 }
