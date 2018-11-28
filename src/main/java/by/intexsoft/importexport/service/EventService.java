@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface EventService<T> {
     List<T> getAll();
-    void save(List<T> list);
+    void save(final List<T> list);
     TypeEvent getType();
-    void convertOfCsvRecordToEventAndSave(List<CSVRecord> list);
-    T buildEventByType(CSVRecord record);
+    void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list);
+    T buildEventByType(final CSVRecord record);
+    List<List<String>> convertToString();
 }

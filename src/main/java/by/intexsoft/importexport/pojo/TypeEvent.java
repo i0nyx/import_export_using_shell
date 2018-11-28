@@ -1,5 +1,5 @@
 package by.intexsoft.importexport.pojo;
 
 public enum TypeEvent {
-    Call, Mms, Sms
+    CALL, MMS, SMS
 }

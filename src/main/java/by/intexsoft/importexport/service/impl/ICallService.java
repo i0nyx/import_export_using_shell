@@ -8,14 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 @Slf4j
 @Service
@@ -29,26 +30,40 @@ public class ICallService implements EventService<Call> {
     }
 
     @Override
-    public void save(List<Call> list) {
+    @Transactional
+    public void save(final List<Call> list) {
         callRepository.saveAll(list);
     }
 
     @Override
     public TypeEvent getType() {
-        return TypeEvent.Call;
+        return TypeEvent.CALL;
     }
 
     @Override
-    public void convertOfCsvRecordToEventAndSave(List<CSVRecord> list) {
+    public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords should not be null!"));
         save(list.stream().map(this::buildEventByType).collect(Collectors.toList()));
     }
 
     @Override
-    public Call buildEventByType(CSVRecord record) {
+    public Call buildEventByType(final CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null!"));
         return Call.builder().uuid(UUID.fromString(record.get("uuid")))
                     .date(LocalDate.parse(record.get("date")))
                     .build();
+    }
+
+    @Override
+    public List<List<String>> convertToString() {
+        List<Call> calls = getAll();
+        List<List<String>> listStr = newArrayList();
+        for(Call call : calls){
+            List<String> strings = newArrayList();
+            strings.add(call.getUuid().toString());
+            strings.add(call.getDate().toString());
+            listStr.add(strings);
+        }
+        return listStr;
     }
 }

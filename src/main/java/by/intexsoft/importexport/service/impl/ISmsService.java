@@ -7,8 +7,13 @@ import by.intexsoft.importexport.service.EventService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 @Service
 @AllArgsConstructor
@@ -21,22 +26,37 @@ public class ISmsService implements EventService<Sms> {
     }
 
     @Override
-    public void save(List list) {
-        System.out.println("Sms " + list);
+    @Transactional
+    public void save(final List<Sms> list) {
+        smsRepository.saveAll(list);
     }
 
     @Override
     public TypeEvent getType() {
-        return TypeEvent.Sms;
+        return TypeEvent.SMS;
     }
 
     @Override
-    public void convertOfCsvRecordToEventAndSave(List<CSVRecord> list) {
-
+    public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
+        Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords should not be null!"));
+        save(list.stream().map(this::buildEventByType).collect(Collectors.toList()));
     }
 
     @Override
-    public Sms buildEventByType(CSVRecord record) {
+    public Sms buildEventByType(final CSVRecord record) {
         return null;
+    }
+
+    @Override
+    public List<List<String>> convertToString() {
+        List<Sms> calls = getAll();
+        List<List<String>> listStr = newArrayList();
+        for (Sms sms : calls) {
+            List<String> strings = newArrayList();
+            strings.add(sms.getUuid().toString());
+            strings.add(sms.getDate().toString());
+            listStr.add(strings);
+        }
+        return listStr;
     }
 }

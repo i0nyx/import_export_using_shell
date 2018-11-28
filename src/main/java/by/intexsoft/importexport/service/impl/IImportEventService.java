@@ -20,9 +20,9 @@ public class IImportEventService implements ImportEventService {
     private final ConvertService convertService;
 
     @Override
-    public void checkAndImport(String path) throws IOException {
+    public void checkAndImport(final String path) throws IOException {
         TypeEvent type = TypeEvent.valueOf(StringUtil.getStringType(path));
         List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path), type);
-        convertService.chooseEventService(csvRecords, type);
+        convertService.chooseEventService(type).convertOfCsvRecordToEventAndSave(csvRecords);
     }
 }
