@@ -21,6 +21,7 @@ public class IImportEventService implements ImportEventService {
 
     @Override
     public void checkAndImport(final String path) throws IOException {
+        StringUtil.checkFileExtension(path);
         TypeEvent type = TypeEvent.valueOf(StringUtil.getStringType(path));
         List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path), type);
         convertService.chooseEventService(type).convertOfCsvRecordToEventAndSave(csvRecords);

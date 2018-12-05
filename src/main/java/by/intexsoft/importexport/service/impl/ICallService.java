@@ -57,14 +57,13 @@ public class ICallService implements EventService<Call> {
 
     @Override
     public List<List<String>> convertToString() {
-        List<Call> calls = getAll();
         List<List<String>> listStr = newArrayList();
-        for(Call call : calls){
+        getAll().forEach(call -> {
             List<String> strings = newArrayList();
             strings.add(call.getUuid().toString());
             strings.add(call.getDate().toString());
             listStr.add(strings);
-        }
+        });
         return listStr;
     }
 }
