@@ -17,11 +17,6 @@ public class ShellCommand implements CommandMarker {
     private final ImportEventService importService;
     private final ExportEventService exportService;
 
-    @CliAvailabilityIndicator(value={"import,export"})
-    public boolean isPrintCommandAvailable(){
-        return Boolean.TRUE;
-    }
-
     @CliCommand(value="import", help = "import events to database")
     public String importCsv(@CliOption(key={"p"}, mandatory = true, help = "enter path to file")final String path) throws IOException {
         importService.checkAndImport(path);
