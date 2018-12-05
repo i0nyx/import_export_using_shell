@@ -33,6 +33,7 @@ public class ICallService implements EventService<Call> {
     @Transactional
     public void save(final List<Call> list) {
         callRepository.saveAll(list);
+        log.info("save call {}", list);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ICallService implements EventService<Call> {
 
     @Override
     public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
-        Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords should not be null!"));
+        Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         save(list.stream().map(this::buildEventByType).collect(Collectors.toList()));
     }
 

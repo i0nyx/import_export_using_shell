@@ -4,5 +4,4 @@ import java.io.IOException;
 
 public interface ImportEventService {
     void checkAndImport(final String path) throws IOException;
-
 }

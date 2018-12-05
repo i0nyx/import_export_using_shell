@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface CsvService {
     List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile, TypeEvent type) throws IOException;
-    <T> void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException;
+    void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException;
 }

@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ICsvService implements CsvService {
-    private ConvertService convertService;
+    private final ConvertService convertService;
     private final String[] header = {"uuid", "date"};
 
     public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile, final TypeEvent type) throws IOException {
