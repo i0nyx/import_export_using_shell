@@ -56,7 +56,7 @@ public class ISmsService implements EventService<Sms> {
     }
 
     @Override
-    public List<List<String>> convertToString() {
+    public List<List<String>> convertToListString() {
         List<Sms> listEvent = getAll();
         List<List<String>> listStr = newArrayList();
         for (Sms sms : listEvent) {

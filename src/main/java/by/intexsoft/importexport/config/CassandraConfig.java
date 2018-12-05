@@ -14,6 +14,8 @@ import org.springframework.data.cassandra.core.convert.MappingCassandraConverter
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
+import java.util.Objects;
+
 
 @Configuration
 @PropertySource("classpath:cassandra.properties")
@@ -62,7 +64,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     @Bean
     public CassandraSessionFactoryBean session() {
         CassandraSessionFactoryBean session = new CassandraSessionFactoryBean();
-        session.setCluster(cluster().getObject());
+        session.setCluster(Objects.requireNonNull(cluster().getObject()));
         session.setKeyspaceName(getKeyspaceName());
         session.setConverter(converter());
         session.setSchemaAction(getSchemaAction());

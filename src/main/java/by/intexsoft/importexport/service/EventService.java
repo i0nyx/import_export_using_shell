@@ -11,5 +11,5 @@ public interface EventService<T> {
     TypeEvent getType();
     void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list);
     T buildEventByType(final CSVRecord record);
-    List<List<String>> convertToString();
+    List<List<String>> convertToListString();
 }

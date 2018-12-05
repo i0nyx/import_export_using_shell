@@ -56,7 +56,7 @@ public class IMmsService implements EventService<Mms> {
     }
 
     @Override
-    public List<List<String>> convertToString() {
+    public List<List<String>> convertToListString() {
         List<Mms> listMms = getAll();
         List<List<String>> listStr = newArrayList();
         for (Mms mms : listMms) {

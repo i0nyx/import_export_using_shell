@@ -56,7 +56,7 @@ public class ICallService implements EventService<Call> {
     }
 
     @Override
-    public List<List<String>> convertToString() {
+    public List<List<String>> convertToListString() {
         List<List<String>> listStr = newArrayList();
         getAll().forEach(call -> {
             List<String> strings = newArrayList();
