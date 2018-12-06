@@ -8,11 +8,11 @@ public final class CSVUtil {
 
     private static final char DEFAULT_SEPARATOR = ',';
 
-    public static void writeLine(Writer w, List<String> values) throws IOException {
+    public static void writeLine(Writer w, Object values) throws IOException {
         writeLine(w, values, DEFAULT_SEPARATOR, ' ');
     }
 
-    public static void writeLine(Writer w, List<String> values, char separators) throws IOException {
+    public static void writeLine(Writer w, Object values, char separators) throws IOException {
         writeLine(w, values, separators, ' ');
     }
 
@@ -24,7 +24,7 @@ public final class CSVUtil {
         return result;
     }
 
-    public static void writeLine(Writer w, List<String> values, char separators, char customQuote) throws IOException {
+    public static void writeLine(Writer w, Object values, char separators, char customQuote) throws IOException {
         boolean first = true;
 
         if (separators == ' ') {
@@ -32,7 +32,7 @@ public final class CSVUtil {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (String value : values) {
+        for (String value : (String[]) values) {
             if (!first) {
                 sb.append(separators);
             }

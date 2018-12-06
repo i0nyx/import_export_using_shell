@@ -32,8 +32,8 @@ public class ICsvService implements CsvService {
 
     public void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException {
         CSVUtil.writeLine(writer, Arrays.asList(header));
-        List<List<String>> lists = convertService.chooseEventService(typeEvent).convertToListString();
-        for(List<String> list : lists){
+        List listStr = convertService.chooseEventService(typeEvent).convertToListString();
+        for(Object list : listStr){
             CSVUtil.writeLine(writer, list);
         }
         writer.flush();
