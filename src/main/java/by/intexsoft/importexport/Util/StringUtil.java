@@ -1,25 +1,48 @@
 package by.intexsoft.importexport.Util;
 
+import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.pojo.TypeExtension;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class StringUtil {
-    public static String getStringType(String path){
-        return new File(path).getName().split("_")[0];
+    public static String getStringType(String path) {
+        String name = new File(path).getName().split("_")[0];
+        if(!checkTypeEvent(name)){
+            throw new IllegalArgumentException("Error: wrong event -- " + name);
+        }
+        return name;
     }
 
-    private static String getFileExtension(final String path){
+    private static boolean checkTypeEvent(String type){
+        AtomicBoolean b = new AtomicBoolean(false);
+        Arrays.stream(TypeEvent.values()).forEach(event ->{
+            if(!b.get() && event.toString().equalsIgnoreCase(type)){
+                b.set(true);
+            }
+        });
+        return b.get();
+    }
+
+    private static String getFileExtension(final String path) {
         final int index = path.indexOf('.');
         return index == -1 ? null : path.substring(index + 1).toUpperCase();
     }
 
-    public static void checkFileExtension(final String path){
+    public static void checkFileExtension(final String path) {
         final String extension = getFileExtension(path);
         Optional.ofNullable(extension).orElseThrow(() -> new IllegalArgumentException("file not found"));
-        assertEquals(extension, TypeExtension.valueOf(extension).toString());
+        AtomicBoolean b = new AtomicBoolean(false);
+        Arrays.stream(TypeExtension.values()).forEach(type -> {
+            if (type.toString().equalsIgnoreCase(extension)) {
+                b.set(true);
+            }
+        });
+        if (!b.get()) {
+            throw new IllegalArgumentException("incorrect file format -- " + extension);
+        }
     }
 }
