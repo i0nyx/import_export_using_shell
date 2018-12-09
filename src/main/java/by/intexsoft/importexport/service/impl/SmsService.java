@@ -1,9 +1,9 @@
 package by.intexsoft.importexport.service.impl;
 
-import by.intexsoft.importexport.pojo.Mms;
+import by.intexsoft.importexport.pojo.Sms;
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.repositories.MmsRepository;
-import by.intexsoft.importexport.service.EventService;
+import by.intexsoft.importexport.repository.SmsRepository;
+import by.intexsoft.importexport.service.IEventService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
@@ -16,29 +16,27 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 @Slf4j
 @Service
 @AllArgsConstructor
-public class IMmsService implements EventService<Mms> {
-    private final MmsRepository mmsRepository;
+public class SmsService implements IEventService<Sms> {
+    private final SmsRepository smsRepository;
 
     @Override
-    public List<Mms> getAll() {
-        return mmsRepository.findAll();
+    public List<Sms> getAll() {
+        return smsRepository.findAll();
     }
 
     @Override
     @Transactional
-    public void save(final List<Mms> list) {
-        mmsRepository.saveAll(list);
-        log.info("save mms {}", list);
+    public void save(final List<Sms> list) {
+        smsRepository.saveAll(list);
+        log.info("save sms {}", list);
     }
 
     @Override
     public TypeEvent getType() {
-        return TypeEvent.MMS;
+        return TypeEvent.SMS;
     }
 
     @Override
@@ -48,23 +46,10 @@ public class IMmsService implements EventService<Mms> {
     }
 
     @Override
-    public Mms buildEventByType(final CSVRecord record) {
+    public Sms buildEventByType(final CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null"));
-        return Mms.builder().uuid(UUID.fromString(record.get("uuid")))
+        return Sms.builder().uuid(UUID.fromString(record.get("uuid")))
                 .date(LocalDate.parse(record.get("date")))
                 .build();
-    }
-
-    @Override
-    public List<List<String>> convertToListString() {
-        List<Mms> listMms = getAll();
-        List<List<String>> listStr = newArrayList();
-        for (Mms mms : listMms) {
-            List<String> strings = newArrayList();
-            strings.add(mms.getUuid().toString());
-            strings.add(mms.getDate().toString());
-            listStr.add(strings);
-        }
-        return listStr;
     }
 }

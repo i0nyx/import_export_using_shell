@@ -1,9 +1,10 @@
 package by.intexsoft.importexport.service.impl;
 
-import by.intexsoft.importexport.Util.CSVUtil;
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.service.ConvertService;
-import by.intexsoft.importexport.service.CsvService;
+import by.intexsoft.importexport.service.IConvertService;
+import by.intexsoft.importexport.service.ICsvService;
+import by.intexsoft.importexport.service.IEventService;
+import by.intexsoft.importexport.util.CSVUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
@@ -20,8 +21,8 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class ICsvService implements CsvService {
-    private final ConvertService convertService;
+public class CsvService implements ICsvService {
+    private final IConvertService convertService;
     private final String[] header = {"uuid", "date"};
 
     public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile, final TypeEvent type) throws IOException {
@@ -32,11 +33,12 @@ public class ICsvService implements CsvService {
 
     public void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException {
         CSVUtil.writeLine(writer, Arrays.asList(header));
-        List listStr = convertService.chooseEventService(typeEvent).convertToListString();
-        for(Object list : listStr){
+        IEventService service = convertService.chooseEventService(typeEvent);
+        for(Object list : service.convertEventToListStr(service.getAll())){
             CSVUtil.writeLine(writer, list);
         }
         writer.flush();
         writer.close();
+        log.info("success write csv file");
     }
 }

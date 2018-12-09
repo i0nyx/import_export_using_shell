@@ -20,7 +20,7 @@ import java.util.Objects;
 @Configuration
 @PropertySource("classpath:cassandra.properties")
 @ComponentScan("by.intexsoft.importexport")
-@EnableCassandraRepositories(basePackages = {"by.intexsoft.importexport.repositories"})
+@EnableCassandraRepositories(basePackages = {"by.intexsoft.importexport.repository"})
 public class CassandraConfig extends AbstractCassandraConfiguration {
     @Value("${cassandra.host}")
     private String cassandraHost;

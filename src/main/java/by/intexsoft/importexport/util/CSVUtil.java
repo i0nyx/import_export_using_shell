@@ -1,4 +1,4 @@
-package by.intexsoft.importexport.Util;
+package by.intexsoft.importexport.util;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -7,13 +7,14 @@ import java.util.List;
 public final class CSVUtil {
 
     private static final char DEFAULT_SEPARATOR = ',';
+    private static final char CUSTOM_QUOTE = ' ';
 
     public static void writeLine(Writer w, Object values) throws IOException {
         writeLine(w, values, DEFAULT_SEPARATOR, ' ');
     }
 
     public static void writeLine(Writer w, Object values, char separators) throws IOException {
-        writeLine(w, values, separators, ' ');
+        writeLine(w, values, separators, CUSTOM_QUOTE);
     }
 
     private static String followCSVFormat(String value) {
@@ -32,7 +33,7 @@ public final class CSVUtil {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (String value : (String[]) values) {
+        for (String value : (List<String>) values) {
             if (!first) {
                 sb.append(separators);
             }

@@ -1,9 +1,6 @@
 package by.intexsoft.importexport.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -15,7 +12,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Call {
+@EqualsAndHashCode(callSuper = false)
+public class Call extends Event{
     @PrimaryKey
     private UUID uuid;
     private LocalDate date;
